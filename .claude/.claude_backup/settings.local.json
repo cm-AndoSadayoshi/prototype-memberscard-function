@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(demo-doc-generator)",
+      "Skill(demo-doc-generator:*)",
+      "Bash(mkdir:*)",
+      "Skill(demo-builder)",
+      "Skill(demo-builder:*)",
+      "Bash(pnpm create:*)"
+    ]
+  }
+}
