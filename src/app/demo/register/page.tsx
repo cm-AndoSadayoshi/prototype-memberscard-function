@@ -3,15 +3,23 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, Gift, Ticket, PartyPopper } from "lucide-react";
+import { ChevronLeft, Gift, Ticket, PartyPopper, X, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+// プロフィールデータ
+const profiles = [
+  { id: 1, name: "田中 美咲", phone: "080-1111-2222", birthday: "1988-07-10" },
+  { id: 2, name: "鈴木 健太", phone: "090-3333-4444", birthday: "1992-12-25" },
+];
 
 export default function RegisterPage() {
   const router = useRouter();
   const [step, setStep] = useState<"form" | "complete">("form");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -25,6 +33,34 @@ export default function RegisterPage() {
       setStep("complete");
       setIsSubmitting(false);
     }, 1500);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProfile(null);
+  };
+
+  const handleSelectProfile = (profileId: number) => {
+    setSelectedProfile(profileId);
+  };
+
+  const handleAutoFill = () => {
+    if (selectedProfile) {
+      const profile = profiles.find((p) => p.id === selectedProfile);
+      if (profile) {
+        setFormData({
+          ...formData,
+          name: profile.name,
+          phone: profile.phone,
+          birthday: profile.birthday,
+        });
+      }
+    }
+    closeModal();
   };
 
   const isFormValid =
@@ -88,9 +124,23 @@ export default function RegisterPage() {
                 transition={{ delay: 0.1 }}
               >
                 <Card>
-                  <h3 className="font-bold text-gray-800 mb-4">
-                    会員情報を入力
-                  </h3>
+                  {/* Account Center 自動入力ボタン */}
+                  <div className="mb-4">
+                    <button
+                      type="button"
+                      onClick={openModal}
+                      className="w-full flex items-center justify-between bg-gray-900 text-white rounded-full px-5 py-3 hover:bg-gray-800 transition-colors"
+                    >
+                      <span className="font-medium tracking-wide">account center</span>
+                      <span className="bg-white text-gray-900 text-sm font-medium px-3 py-1 rounded-full">
+                        自動入力
+                      </span>
+                    </button>
+                    <p className="text-xs text-gray-500 text-center mt-2">
+                      LINEやYahoo! JAPANの登録情報を自動で入力できます。
+                    </p>
+                  </div>
+
                   <div className="space-y-4">
                     <Input
                       label="お名前"
@@ -264,6 +314,104 @@ export default function RegisterPage() {
               </motion.div>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ハーフモーダル（ボトムシート） */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <>
+            {/* オーバーレイ */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal}
+              className="absolute inset-0 bg-black/50 z-40"
+            />
+
+            {/* モーダル本体 */}
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 max-h-[80%] overflow-hidden"
+            >
+              {/* モーダルヘッダー */}
+              <div className="flex items-center justify-between px-5 py-4 border-b">
+                <h3 className="font-bold text-gray-900">account center</h3>
+                <button
+                  onClick={closeModal}
+                  className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <X className="w-6 h-6 text-gray-500" />
+                </button>
+              </div>
+
+              {/* モーダルコンテンツ */}
+              <div className="p-5">
+                <h4 className="text-lg font-bold text-gray-900 mb-1">
+                  クイック入力機能を使って
+                </h4>
+                <h4 className="text-lg font-bold text-gray-900 mb-3">
+                  自動で入力しますか？
+                </h4>
+                <p className="text-sm text-gray-500 mb-6">
+                  アカウントセンターで管理するLINEやYahoo!JAPAN
+                  のプロフィール情報を利用した機能です。
+                </p>
+
+                {/* プロフィール選択 */}
+                <div className="border rounded-xl overflow-hidden mb-4">
+                  {profiles.map((profile, index) => (
+                    <button
+                      key={profile.id}
+                      type="button"
+                      onClick={() => handleSelectProfile(profile.id)}
+                      className={`w-full flex items-center justify-between px-4 py-4 hover:bg-gray-100 transition-colors ${
+                        index !== profiles.length - 1 ? "border-b" : ""
+                      } ${selectedProfile === profile.id ? "bg-gray-200" : ""}`}
+                    >
+                      <span className={`font-medium ${
+                        selectedProfile === profile.id
+                          ? "text-gray-900"
+                          : "text-gray-800"
+                      }`}>
+                        {profile.name}
+                      </span>
+                      <ChevronRight
+                        className={`w-5 h-5 ${
+                          selectedProfile === profile.id
+                            ? "text-gray-900"
+                            : "text-gray-400"
+                        }`}
+                      />
+                    </button>
+                  ))}
+                </div>
+
+                <p className="text-xs text-gray-400 mb-6">
+                  ※プロフィールの各項目を選択するか、LINEの設定＞アカウントセンター
+                  ＞共通プロフィールから変更できます。
+                </p>
+
+                {/* 自動入力ボタン */}
+                <button
+                  type="button"
+                  onClick={handleAutoFill}
+                  disabled={!selectedProfile}
+                  className={`w-full py-4 rounded-xl font-bold text-white transition-colors ${
+                    selectedProfile
+                      ? "bg-gray-900 hover:bg-gray-800"
+                      : "bg-gray-300 cursor-not-allowed"
+                  }`}
+                >
+                  自動で入力する
+                </button>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>

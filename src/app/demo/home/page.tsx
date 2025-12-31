@@ -6,6 +6,7 @@ import { Crown, Ticket, RefreshCw, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Barcode } from "@/components/ui/barcode";
 
 export default function HomePage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -63,26 +64,21 @@ export default function HomePage() {
                   {currentRank}
                 </Badge>
               </div>
-              <span className="text-xs text-gray-500">会員番号</span>
             </div>
 
             {/* バーコード表示エリア */}
             <div className="bg-white rounded-xl p-4 mb-4 shadow-sm">
               <div className="flex flex-col items-center">
-                {/* バーコードのシミュレーション */}
-                <div className="w-full h-16 flex items-center justify-center gap-0.5 mb-2">
-                  {memberNumber.split("").map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-full bg-black"
-                      style={{
-                        width: `${Math.random() * 2 + 1}px`,
-                        marginRight: `${Math.random() * 2 + 1}px`,
-                      }}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm font-mono text-gray-600 tracking-wider">
+                {/* Code-128形式バーコード */}
+                <Barcode
+                  value={memberNumber}
+                  format="CODE128"
+                  width={2}
+                  height={60}
+                  displayValue={false}
+                  className="w-full max-w-[250px]"
+                />
+                <span className="text-sm font-mono text-gray-600 tracking-wider mt-2">
                   {memberNumber}
                 </span>
               </div>
