@@ -1,5 +1,5 @@
 import { HomeContent } from "@/components/pages/HomeContent";
 
 export default function HomePage() {
-  return <HomeContent basePath="/demo" />;
+  return <HomeContent basePath="/mini" />;
 }
