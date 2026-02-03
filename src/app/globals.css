@@ -4,8 +4,15 @@
   --background: #ffffff;
   --foreground: #171717;
   --primary: #06C755;
-  --primary-dark: #00B900;
-  --accent: #FF6B35;
+  --primary-dark: #05a648;
+  --line-green: #06C755;
+  --line-green-dark: #05a648;
+  --line-green-light: #e6f9ed;
+  --text-primary: #171717;
+  --text-secondary: #6B7280;
+  --text-tertiary: #9CA3AF;
+  --border-light: #E5E7EB;
+  --background-gray: #F9FAFB;
   --gold: #FFD700;
   --gray-temp: #9CA3AF;
 }
@@ -15,7 +22,14 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
-  --color-accent: var(--accent);
+  --color-line-green: var(--line-green);
+  --color-line-green-dark: var(--line-green-dark);
+  --color-line-green-light: var(--line-green-light);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-border-light: var(--border-light);
+  --color-background-gray: var(--background-gray);
   --color-gold: var(--gold);
   --color-gray-temp: var(--gray-temp);
   --font-sans: var(--font-geist-sans);
@@ -25,5 +39,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }

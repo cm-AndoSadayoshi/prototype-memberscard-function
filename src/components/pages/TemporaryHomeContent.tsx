@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Gift, ChevronRight, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -41,13 +41,13 @@ export function TemporaryHomeContent({ basePath }: BasePathProps) {
         </button>
       </div>
 
-      <div className="p-4 space-y-4">
+      <div className="p-4 space-y-3">
         {/* 仮会員証カード */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <Card className="bg-gradient-to-br from-gray-100 to-gray-200 border-gray-300">
+          <Card className="bg-gray-100 border-gray-300">
             <div className="flex items-center justify-between mb-4">
               <Badge variant="gray" className="font-bold">
                 仮会員
@@ -91,67 +91,25 @@ export function TemporaryHomeContent({ basePath }: BasePathProps) {
           </Card>
         </motion.div>
 
-        {/* 本会員登録バナー */}
+        {/* 機能説明 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <motion.div
-            animate={{ scale: [1, 1.02, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <Card
-              className="cursor-pointer border-2 border-[#FF6B35]/30"
-              style={{
-                background: "linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%)",
-              }}
-              onClick={() => router.push(`${basePath}/register`)}
-            >
-              <div className="flex items-center gap-4 text-white">
-                <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Gift className="w-7 h-7" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-bold text-lg">今すぐ本会員登録で</p>
-                  <p className="text-white/90 text-sm">
-                    <span className="font-bold text-xl">500円OFF</span>{" "}
-                    クーポンをGET!
-                  </p>
-                </div>
-                <ChevronRight className="w-6 h-6 text-white/60" />
-              </div>
-            </Card>
-          </motion.div>
-        </motion.div>
-
-        {/* 機能説明 */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <Card>
+          <Card elevation="flat">
             <h3 className="font-bold text-gray-800 mb-3">仮会員でできること</h3>
             <div className="space-y-3">
-              {[
-                { text: "お買い物でポイントが貯まる", available: true },
-                { text: "ポイントを使う（本会員登録が必要）", available: false },
-                { text: "クーポン利用（本会員登録が必要）", available: false },
-              ].map((feature) => (
-                <div key={feature.text} className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    feature.available ? "bg-green-100" : "bg-red-100"
-                  }`}>
-                    <span className={`text-lg ${
-                      feature.available ? "text-green-600" : "text-red-500"
-                    }`}>
-                      {feature.available ? "○" : "×"}
-                    </span>
-                  </div>
-                  <span className="text-sm text-gray-600">{feature.text}</span>
-                </div>
-              ))}
+              <div>
+                <p className="text-sm font-medium text-gray-800">お買い物でポイントが貯まる</p>
+              </div>
+              <div className="border-t pt-3">
+                <p className="text-xs text-gray-400 mb-2">本会員登録が必要</p>
+                <ul className="space-y-1 pl-0">
+                  <li className="text-sm text-gray-500">・ポイントを使う</li>
+                  <li className="text-sm text-gray-500">・クーポン利用</li>
+                </ul>
+              </div>
             </div>
           </Card>
         </motion.div>
@@ -160,15 +118,20 @@ export function TemporaryHomeContent({ basePath }: BasePathProps) {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.3 }}
         >
-          <Button
-            size="lg"
-            className="w-full"
-            onClick={() => router.push(`${basePath}/register`)}
-          >
-            本会員登録してポイントを使う
-          </Button>
+          <div className="space-y-2">
+            <Button
+              size="lg"
+              className="w-full"
+              onClick={() => router.push(`${basePath}/register`)}
+            >
+              本会員登録して特典を受け取る
+            </Button>
+            <p className="text-xs text-center text-gray-500">
+              登録後すぐに500円OFFクーポンがもらえます
+            </p>
+          </div>
         </motion.div>
       </div>
     </div>
