@@ -43,21 +43,19 @@ export function HomeContent({ basePath }: BasePathProps) {
         </button>
       </div>
 
-      <div className="p-4 space-y-4">
+      <div className="p-4 space-y-3">
         {/* 本会員証カード */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <Card
-            className="border-2 border-amber-200"
-            style={{
-              background: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)",
-            }}
+            className="bg-amber-50"
+            elevation="medium"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Badge variant="gold" className="font-bold">
+                <Badge className="font-bold bg-gradient-to-r from-amber-400 to-yellow-500 text-white">
                   <Crown className="w-3 h-3 mr-1" />
                   本会員
                 </Badge>
@@ -68,7 +66,7 @@ export function HomeContent({ basePath }: BasePathProps) {
             </div>
 
             {/* バーコード表示エリア */}
-            <div className="bg-white rounded-xl p-4 mb-4 shadow-sm">
+            <div className="bg-white rounded-xl p-4 mb-4">
               <div className="flex flex-col items-center">
                 {/* Code-128形式バーコード */}
                 <Barcode
@@ -86,21 +84,21 @@ export function HomeContent({ basePath }: BasePathProps) {
             </div>
 
             {/* ポイント表示 */}
-            <div className="text-center mb-4">
-              <p className="text-sm text-gray-500 mb-1">保有ポイント</p>
+            <div className="flex items-baseline justify-center gap-2 mb-4">
+              <p className="text-sm text-gray-500">保有ポイント</p>
               <motion.p
                 key={points}
                 initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
-                className="text-4xl font-bold text-amber-700"
+                className="text-3xl font-bold text-amber-700"
               >
                 {points.toLocaleString()}
-                <span className="text-lg font-normal ml-1">pt</span>
+                <span className="text-base font-normal ml-1">pt</span>
               </motion.p>
-              <p className="text-xs text-green-600 mt-1 font-medium">
-                ポイントを貯める・使う
-              </p>
             </div>
+            <p className="text-xs text-green-600 text-center font-medium mb-4">
+              ポイントを貯める・使う
+            </p>
 
             {/* ランク進捗 */}
             <div className="bg-white/60 rounded-xl p-3">
@@ -123,21 +121,17 @@ export function HomeContent({ basePath }: BasePathProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card className="cursor-pointer hover:shadow-md transition-shadow">
+          <Card className="cursor-pointer hover:shadow-md transition-shadow" elevation="low">
             <div className="flex items-center gap-4">
               <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%)",
-                }}
+                className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#06C755]"
               >
                 <Ticket className="w-7 h-7 text-white" />
               </div>
               <div className="flex-1">
                 <p className="font-bold text-gray-800">保有クーポン</p>
                 <p className="text-sm text-gray-500">
-                  <span className="text-[#FF6B35] font-bold">1枚</span> 利用可能
+                  <span className="text-[#06C755] font-bold">1枚</span> 利用可能
                 </p>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400" />
@@ -145,9 +139,9 @@ export function HomeContent({ basePath }: BasePathProps) {
 
             {/* クーポン詳細 */}
             <div className="mt-4 pt-4 border-t border-gray-100">
-              <div className="flex items-center justify-between bg-orange-50 rounded-lg p-3">
+              <div className="flex items-center justify-between bg-green-50 rounded-lg p-3">
                 <div>
-                  <p className="font-bold text-[#FF6B35]">500円OFF</p>
+                  <p className="font-bold text-[#06C755]">500円OFF</p>
                   <p className="text-xs text-gray-500">有効期限: 30日後まで</p>
                 </div>
                 <Badge variant="warning" size="sm">
